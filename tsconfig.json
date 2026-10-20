@@ -11,6 +11,9 @@
     "isolatedModules": true,
     "experimentalDecorators": true,
     "importHelpers": true,
+    "paths": {
+      "portal-context": ["./dist/portal-context"]
+    },
     "target": "ES2022",
     "module": "preserve"
   },
@@ -19,5 +22,31 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true
   },
-  "files": []
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/shell/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/shell/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/mfe-polizas/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/mfe-polizas/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/mfe-siniestros/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/mfe-siniestros/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/portal-context/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/portal-context/tsconfig.spec.json"
+    }
+  ]
 }
