@@ -1,0 +1,4 @@
+{
+  "mfePolizas": "http://localhost:4200/remoteEntry.json",
+  "mfeSiniestros": "http://localhost:4200/remoteEntry.json"
+}
