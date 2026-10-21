@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
-@Component({
-  imports: [],
-  selector: 'lib-portal-context',
-  styles: ``,
-  template: ` <p>portal-context works!</p> `,
-})
-export class PortalContext {}
+@Injectable({ providedIn: 'root' })
+export class PortalContext {
+  readonly contador = signal(0);
+
+  incrementar() {
+    this.contador.update((valor) => valor + 1);
+  }
+}
