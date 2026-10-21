@@ -4,7 +4,7 @@ import {
 } from '@angular-architects/native-federation/config';
 
 export default withNativeFederation({
-  name: 'mfe-siniestros',
+  name: 'siniestros',
 
   exposes: {
     './Component': './projects/mfe-siniestros/src/app/app.ts',

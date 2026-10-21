@@ -1,8 +1,7 @@
-import { initFederation } from '@angular-architects/native-federation';
+import { initFederation, NativeFederationResult } from '@angular-architects/native-federation';
 
 initFederation('federation.manifest.json', {
   hostRemoteEntry: { url: './remoteEntry.json' },
 })
-  .catch((err) => console.error(err))
-  .then((_) => import('./bootstrap'))
+  .then((nf: NativeFederationResult) => import('./bootstrap').then((m) => m.bootstrap(nf)))
   .catch((err) => console.error(err));

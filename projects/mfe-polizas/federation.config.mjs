@@ -4,10 +4,10 @@ import {
 } from '@angular-architects/native-federation/config';
 
 export default withNativeFederation({
-  name: 'mfe-polizas',
+  name: 'polizas',
 
   exposes: {
-    './Component': './projects/mfe-polizas/src/app/app.ts',
+  './Routes': './projects/mfe-polizas/src/app/polizas.routes.ts',
   },
 
   //shareScope: autoShareScope({level: 'minor'}),
