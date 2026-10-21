@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { PortalContext } from '@portal/context';
+import { PortalContext, Sesion } from '@portal/context';
 
 @Component({
   selector: 'app-root',
@@ -10,4 +10,5 @@ import { PortalContext } from '@portal/context';
 })
 export class App {
   protected readonly contexto = inject(PortalContext);
+  protected readonly sesion = inject(Sesion);
 }

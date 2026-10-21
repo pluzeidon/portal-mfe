@@ -1,6 +1,13 @@
 <header>
   <strong>Portal de asegurados</strong>
   <span> · Contador en el shell: {{ contexto.contador() }}</span>
+  <span> · </span>
+  @if (sesion.usuario(); as usuario) {
+    <span>{{ usuario.nombre }}</span>
+    <button (click)="sesion.cerrarSesion()">Cerrar sesión</button>
+  } @else {
+    <button (click)="sesion.iniciarSesion()">Iniciar sesión</button>
+  }
   <nav>
     <a routerLink="/">Inicio</a> |
     <a routerLink="/polizas">Pólizas</a>

@@ -2,6 +2,7 @@ import { ApplicationConfig, InjectionToken, provideBrowserGlobalErrorListeners }
 import { provideRouter } from '@angular/router';
 import { NativeFederationResult } from '@angular-architects/native-federation';
 import { routes } from './app.routes';
+import { provideSesionSimulada } from '@portal/context';
 
 export const MODULE_LOADER = new InjectionToken<NativeFederationResult>('MODULE_LOADER');
 
@@ -10,5 +11,6 @@ export const appConfig = (nf: NativeFederationResult): ApplicationConfig => ({
     provideBrowserGlobalErrorListeners(),
     { provide: MODULE_LOADER, useValue: nf },
     provideRouter(routes(nf)),
+    provideSesionSimulada(),
   ],
 });
