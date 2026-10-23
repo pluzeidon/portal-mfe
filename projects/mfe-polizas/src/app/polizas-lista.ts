@@ -6,7 +6,7 @@ import { POLIZAS } from './polizas.data';
 @Component({
   selector: 'polizas-lista',
   template: `
-    <h2>Mis pólizas</h2>
+    <h2>Mis pólizas <small>(nueva versión)</small></h2>
     <p>Hola, {{ sesion.usuario()?.nombre ?? 'sin sesión' }}. Estas son tus pólizas.</p>
 
     <table>

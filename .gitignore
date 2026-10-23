@@ -42,3 +42,6 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Artefactos publicados localmente (se regeneran con npm run publicar)
+/hosting

@@ -1,18 +1,23 @@
-<header>
-  <strong>Portal de asegurados</strong>
-  <span>Póliza activa: {{ contexto.polizaActiva()?.numero ?? 'ninguna' }}</span>
-  @if (sesion.usuario(); as usuario) {
-    <span>{{ usuario.nombre }}</span>
-    <button (click)="sesion.cerrarSesion()">Cerrar sesión</button>
-  } @else {
-    <button (click)="sesion.iniciarSesion()">Iniciar sesión</button>
-  }
-  <nav>
-    <a routerLink="/">Inicio</a> |
-    <a routerLink="/polizas">Pólizas</a> |
-    <a routerLink="/siniestros">Siniestros</a>
-  </nav>
-</header>
-<main>
-  <router-outlet />
-</main>
+<mfe-boundary [nombre]="info.nombre" [version]="info.version" [origen]="info.origen">
+  <header>
+    <strong>Portal de asegurados</strong>
+    <span>Póliza activa: {{ contexto.polizaActiva()?.numero ?? 'ninguna' }}</span>
+    @if (sesion.usuario(); as usuario) {
+      <span>{{ usuario.nombre }}</span>
+      <button (click)="sesion.cerrarSesion()">Cerrar sesión</button>
+    } @else {
+      <button (click)="sesion.iniciarSesion()">Iniciar sesión</button>
+    }
+    <button (click)="contexto.alternarRayosX()">
+      Rayos X: {{ contexto.rayosX() ? 'encendido' : 'apagado' }}
+    </button>
+    <nav>
+      <a routerLink="/">Inicio</a> |
+      <a routerLink="/polizas">Pólizas</a> |
+      <a routerLink="/siniestros">Siniestros</a>
+    </nav>
+  </header>
+  <main>
+    <router-outlet />
+  </main>
+</mfe-boundary>
