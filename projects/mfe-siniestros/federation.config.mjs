@@ -8,7 +8,7 @@ export default withNativeFederation({
   name: 'siniestros',
 
   exposes: {
-    './Component': './projects/mfe-siniestros/src/app/app.ts',
+  './Routes': './projects/mfe-siniestros/src/app/siniestros.routes.ts',
   },
 
   //shareScope: autoShareScope({level: 'minor'}),

@@ -11,4 +11,12 @@ export const routes = (nf: NativeFederationResult): Routes => [
         .loadRemoteModule<{ POLIZAS_ROUTES: Routes }>('polizas', './Routes')
         .then((m) => m.POLIZAS_ROUTES),
   },
+  {
+    path: 'siniestros',
+    canActivate: [sesionGuard],
+    loadChildren: () =>
+      nf
+        .loadRemoteModule<{ SINIESTROS_ROUTES: Routes }>('siniestros', './Routes')
+        .then((m) => m.SINIESTROS_ROUTES),
+  },
 ];

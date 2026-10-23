@@ -1,10 +1,16 @@
 import { Injectable, signal } from '@angular/core';
+import { Poliza } from './poliza';
 
 @Injectable({ providedIn: 'root' })
 export class PortalContext {
-  readonly contador = signal(0);
+  private readonly _polizaActiva = signal<Poliza | null>(null);
+  readonly polizaActiva = this._polizaActiva.asReadonly();
 
-  incrementar() {
-    this.contador.update((valor) => valor + 1);
+  seleccionarPoliza(poliza: Poliza) {
+    this._polizaActiva.set(poliza);
+  }
+
+  limpiarPoliza() {
+    this._polizaActiva.set(null);
   }
 }

@@ -1,1 +1,47 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --color-primario: #1a4f8b;
+  --color-resaltado: #e8f0fe;
+  --color-borde: #d0d7de;
+  --color-texto: #1f2328;
+  font-family: system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  color: var(--color-texto);
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-primario);
+  color: white;
+}
+
+header a {
+  color: white;
+}
+
+main {
+  padding: 1.5rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--color-borde);
+  text-align: left;
+}
+
+button {
+  cursor: pointer;
+}

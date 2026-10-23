@@ -1,7 +1,6 @@
 <header>
   <strong>Portal de asegurados</strong>
-  <span> · Contador en el shell: {{ contexto.contador() }}</span>
-  <span> · </span>
+  <span>Póliza activa: {{ contexto.polizaActiva()?.numero ?? 'ninguna' }}</span>
   @if (sesion.usuario(); as usuario) {
     <span>{{ usuario.nombre }}</span>
     <button (click)="sesion.cerrarSesion()">Cerrar sesión</button>
@@ -10,7 +9,8 @@
   }
   <nav>
     <a routerLink="/">Inicio</a> |
-    <a routerLink="/polizas">Pólizas</a>
+    <a routerLink="/polizas">Pólizas</a> |
+    <a routerLink="/siniestros">Siniestros</a>
   </nav>
 </header>
 <main>
