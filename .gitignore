@@ -45,3 +45,7 @@ Thumbs.db
 
 # Artefactos publicados localmente (se regeneran con npm run publicar)
 /hosting
+
+# Resultados de Playwright
+/test-results
+/playwright-report
