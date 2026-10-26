@@ -1,4 +1,4 @@
-{
+  {
   "name": "portal-mfe",
   "version": "0.0.0",
   "scripts": {
@@ -17,7 +17,9 @@
     "demo": "concurrently -n shell,polizas,siniestros,cotizador -c magenta,green,red,yellow \"npm:servir:shell\" \"npm:servir:polizas\" \"npm:servir:siniestros\" \"npm:servir:cotizador\"",
     "demo:base": "concurrently -n shell,polizas,cotizador -c magenta,green,yellow \"npm:servir:shell\" \"npm:servir:polizas\" \"npm:servir:cotizador\"",
     "e2e": "playwright test",
-    "e2e:reporte": "playwright show-report"
+    "e2e:reporte": "playwright show-report",
+    "publicar:azure": "node scripts/publicar-azure.mjs",
+    "revertir:azure": "node scripts/revertir-azure.mjs"
   },
   "private": true,
   "packageManager": "npm@11.17.0",
