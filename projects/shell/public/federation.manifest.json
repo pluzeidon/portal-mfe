@@ -1,4 +1,5 @@
 {
   "polizas": "http://localhost:4201/remoteEntry.json",
-  "siniestros": "http://localhost:4202/remoteEntry.json"
+  "siniestros": "http://localhost:4202/remoteEntry.json",
+  "cotizador": "http://localhost:4203/mfe-cotizador.js"
 }

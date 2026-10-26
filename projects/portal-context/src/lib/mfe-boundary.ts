@@ -5,13 +5,16 @@ const COLORES: Record<string, string> = {
   shell: '#8250df',
   polizas: '#1a7f37',
   siniestros: '#cf222e',
+  cotizador: '#9a6700',
 };
 
 @Component({
   selector: 'mfe-boundary',
   template: `
     @if (contexto.rayosX()) {
-      <span class="etiqueta">{{ nombre() }} · v{{ version() }} · {{ origenCorto() }}</span>
+      <span class="etiqueta">
+        {{ nombre() }} · v{{ version() }} · {{ tecnologia() }} · {{ origenCorto() }}
+      </span>
     }
     <ng-content />
   `,
@@ -45,6 +48,7 @@ export class MfeBoundary {
   readonly nombre = input.required<string>();
   readonly version = input.required<string>();
   readonly origen = input.required<string>();
+  readonly tecnologia = input('Angular');
 
   protected readonly contexto = inject(PortalContext);
   protected readonly color = computed(() => COLORES[this.nombre()] ?? '#57606a');

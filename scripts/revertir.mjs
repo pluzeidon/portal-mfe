@@ -1,12 +1,17 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-const PUERTOS = { polizas: 8081, siniestros: 8082 };
+const REMOTOS = {
+  polizas: { puerto: 8081, entrada: 'remoteEntry.json' },
+  siniestros: { puerto: 8082, entrada: 'remoteEntry.json' },
+  cotizador: { puerto: 8083, entrada: 'mfe-cotizador.js' },
+};
 const MANIFIESTO = 'hosting/shell/federation.manifest.json';
 
 const [nombre, version] = process.argv.slice(2);
-if (!PUERTOS[nombre] || !version) {
-  console.error('Uso: npm run revertir <polizas|siniestros> <versión>');
+const remoto = REMOTOS[nombre];
+if (!remoto || !version) {
+  console.error('Uso: npm run revertir <polizas|siniestros|cotizador> <versión>');
   process.exit(1);
 }
 
@@ -16,7 +21,7 @@ if (!existsSync(join('hosting', nombre, version))) {
 }
 
 const manifiesto = JSON.parse(readFileSync(MANIFIESTO, 'utf8'));
-manifiesto[nombre] = `http://localhost:${PUERTOS[nombre]}/${version}/remoteEntry.json`;
+manifiesto[nombre] = `http://localhost:${remoto.puerto}/${version}/${remoto.entrada}`;
 writeFileSync(MANIFIESTO, JSON.stringify(manifiesto, null, 2) + '\n');
 
 console.log(`✔ El manifiesto ahora apunta a ${nombre} v${version}. No se compiló ni se copió nada.`);

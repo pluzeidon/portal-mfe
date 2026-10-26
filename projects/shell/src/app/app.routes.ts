@@ -17,5 +17,11 @@ export const routes = (nf: NativeFederationResult): Routes => [
     canActivate: [sesionGuard, dominioGuard('siniestros')],
     loadChildren: () => cargarRemoto(nf, 'siniestros', 'SINIESTROS_ROUTES', 'Siniestros'),
   },
+  {
+    path: 'cotizador',
+    canActivate: [sesionGuard, dominioGuard('cotizador')],
+    loadComponent: () => import('./federation/cotizador-host').then((m) => m.CotizadorHost),
+    data: { nombre: 'Cotizador' },
+  },
   { path: '**', redirectTo: '' },
 ];

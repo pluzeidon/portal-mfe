@@ -32,6 +32,13 @@ export default defineConfig({
       timeout: 180_000,
     },
     {
+      command:
+        'npm --prefix projects/mfe-cotizador run build && npx http-server projects/mfe-cotizador/dist -p 4203 -c-1 --cors',
+      url: 'http://localhost:4203/mfe-cotizador.js',
+      reuseExistingServer: true,
+      timeout: 180_000,
+    },
+    {
       command: 'npx ng serve shell',
       url: 'http://localhost:4200',
       reuseExistingServer: true,

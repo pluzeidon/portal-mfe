@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 
-type Seccion = 'Inicio' | 'Pólizas' | 'Siniestros';
+type Seccion = 'Inicio' | 'Pólizas' | 'Siniestros' | 'Cotizador';
 
 /** Navega con el menú del shell. En celular, abre el menú ☰ si hace falta. */
 async function irA(page: Page, seccion: Seccion) {
@@ -81,12 +81,31 @@ test('si Siniestros no responde, el portal muestra un aviso y Pólizas sigue fun
   await expect(page.getByRole('heading', { name: /Mis pólizas/ })).toBeVisible();
 });
 
+test('el cotizador en React recibe el mercado del shell y le devuelve la cotización', async ({ page }) => {
+  await page.goto('/?sesion=simulada');
+
+  await irA(page, 'Cotizador');
+  await expect(page.getByRole('heading', { name: 'Cotiza tu seguro' })).toBeVisible();
+  await expect(page.getByText(/Productos disponibles en México/)).toBeVisible();
+
+  // React → shell: el evento llega y el shell lo muestra
+  await page.getByRole('button', { name: 'Cotizar' }).click();
+  await expect(page.getByText(/El shell recibió la cotización/)).toBeVisible();
+
+  // Shell → React: al cambiar de país, React recibe el nuevo contexto
+  await cambiarPais(page, 'ES');
+  await expect(page.getByText(/Productos disponibles en España/)).toBeVisible();
+  await page.getByRole('button', { name: 'Cotizar' }).click();
+  await expect(page.getByText(/El shell recibió la cotización: .*€/)).toBeVisible();
+});
+
 test('ninguna pantalla se desborda a lo ancho', async ({ page }) => {
   await page.goto('/?sesion=simulada');
 
-  const pantallas: { seccion: Seccion; titulo: RegExp }[] = [
+    const pantallas: { seccion: Seccion; titulo: RegExp }[] = [
     { seccion: 'Pólizas', titulo: /Mis pólizas/ },
     { seccion: 'Siniestros', titulo: /Reportar un siniestro/ },
+    { seccion: 'Cotizador', titulo: /Cotiza tu seguro/ },
     { seccion: 'Inicio', titulo: /Hola|Bienvenido/ },
   ];
 

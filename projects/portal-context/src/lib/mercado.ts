@@ -25,7 +25,7 @@ export const MERCADOS: Record<CodigoMercado, Mercado> = {
     nombre: 'México',
     locale: 'es-MX',
     documentoFiscal: { nombre: 'RFC', patron: '^[A-ZÑ&]{3,4}\\d{6}[A-Z0-9]{3}$', ejemplo: 'GODE561231GR8' },
-    dominios: ['polizas', 'siniestros'],
+    dominios: ['polizas', 'siniestros', 'cotizador'],
   },
   CO: {
     codigo: 'CO',
@@ -39,6 +39,6 @@ export const MERCADOS: Record<CodigoMercado, Mercado> = {
     nombre: 'España',
     locale: 'es-ES',
     documentoFiscal: { nombre: 'NIF o NIE', patron: '^([XYZ]\\d{7}|\\d{8})[A-Z]$', ejemplo: '12345678Z' },
-    dominios: ['polizas'],
+    dominios: ['polizas', 'cotizador'],
   },
 };

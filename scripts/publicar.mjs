@@ -3,9 +3,32 @@ import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } fr
 import { join } from 'node:path';
 
 const APPS = {
-  shell: { proyecto: 'shell', info: 'projects/shell/src/app/shell-info.ts' },
-  polizas: { proyecto: 'mfe-polizas', info: 'projects/mfe-polizas/src/app/mfe-info.ts', puerto: 8081 },
-  siniestros: { proyecto: 'mfe-siniestros', info: 'projects/mfe-siniestros/src/app/mfe-info.ts', puerto: 8082 },
+  shell: {
+    construir: 'npx ng build shell',
+    salida: 'dist/shell',
+    info: 'projects/shell/src/app/shell-info.ts',
+  },
+  polizas: {
+    construir: 'npx ng build mfe-polizas',
+    salida: 'dist/mfe-polizas',
+    info: 'projects/mfe-polizas/src/app/mfe-info.ts',
+    puerto: 8081,
+    entrada: 'remoteEntry.json',
+  },
+  siniestros: {
+    construir: 'npx ng build mfe-siniestros',
+    salida: 'dist/mfe-siniestros',
+    info: 'projects/mfe-siniestros/src/app/mfe-info.ts',
+    puerto: 8082,
+    entrada: 'remoteEntry.json',
+  },
+  cotizador: {
+    construir: 'npm --prefix projects/mfe-cotizador run build',
+    salida: 'projects/mfe-cotizador/dist',
+    info: 'projects/mfe-cotizador/src/info.ts',
+    puerto: 8083,
+    entrada: 'mfe-cotizador.js',
+  },
 };
 const MANIFIESTO = 'hosting/shell/federation.manifest.json';
 
@@ -13,7 +36,7 @@ const MANIFIESTO = 'hosting/shell/federation.manifest.json';
 const [nombre, version] = process.argv.slice(2);
 const app = APPS[nombre];
 if (!app || !/^\d+\.\d+\.\d+$/.test(version ?? '')) {
-  console.error('Uso: npm run publicar <shell|polizas|siniestros> <versión>');
+  console.error('Uso: npm run publicar <shell|polizas|siniestros|cotizador> <versión>');
   console.error('Ejemplo: npm run publicar polizas 1.1.0');
   process.exit(1);
 }
@@ -31,14 +54,14 @@ if (!esShell && existsSync(destino)) {
 const codigo = readFileSync(app.info, 'utf8').replace(/version: '[^']*'/, `version: '${version}'`);
 writeFileSync(app.info, codigo);
 
-// 2. Compilar solo esta aplicación, en modo producción
-console.log(`\n▶ Compilando ${app.proyecto} v${version}...\n`);
-rmSync(join('dist', app.proyecto), { recursive: true, force: true });
-execSync(`npx ng build ${app.proyecto}`, { stdio: 'inherit' });
+// 2. Compilar solo esta aplicación, en modo producción, con su propia herramienta
+console.log(`\n▶ Compilando ${nombre} v${version}...\n`);
+rmSync(app.salida, { recursive: true, force: true });
+execSync(app.construir, { stdio: 'inherit' });
 
 // 3. Copiar el resultado al hosting
-const conBrowser = join('dist', app.proyecto, 'browser');
-const salida = existsSync(conBrowser) ? conBrowser : join('dist', app.proyecto);
+const conBrowser = join(app.salida, 'browser');
+const salida = existsSync(conBrowser) ? conBrowser : app.salida;
 const manifiestoPrevio = existsSync(MANIFIESTO) ? readFileSync(MANIFIESTO, 'utf8') : null;
 
 if (esShell) {
@@ -49,14 +72,13 @@ cpSync(salida, destino, { recursive: true });
 
 // 4. Actualizar el manifiesto
 if (esShell) {
-  // Al republicar el shell se conserva el manifiesto vigente: las versiones
-  // de los remotes no dependen del shell.
+  // Al republicar el shell se conserva el manifiesto vigente
   if (manifiestoPrevio) {
     writeFileSync(MANIFIESTO, manifiestoPrevio);
   }
 } else {
   const manifiesto = existsSync(MANIFIESTO) ? JSON.parse(readFileSync(MANIFIESTO, 'utf8')) : {};
-  manifiesto[nombre] = `http://localhost:${app.puerto}/${version}/remoteEntry.json`;
+  manifiesto[nombre] = `http://localhost:${app.puerto}/${version}/${app.entrada}`;
   writeFileSync(MANIFIESTO, JSON.stringify(manifiesto, null, 2) + '\n');
 }
 

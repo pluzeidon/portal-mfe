@@ -21,4 +21,11 @@ export const DOMINIOS: Dominio[] = [
     titulo: 'Reportar un siniestro',
     descripcion: 'Registra un siniestro sobre tu póliza activa y consulta tus reportes.',
   },
+  {
+    clave: 'cotizador',
+    etiqueta: 'Cotizador',
+    ruta: '/cotizador',
+    titulo: 'Cotizar un seguro',
+    descripcion: 'Calcula una prima estimada con los productos disponibles en tu país.',
+  },
 ];
