@@ -1,22 +1,55 @@
 <mfe-boundary [nombre]="info.nombre" [version]="info.version" [origen]="info.origen">
-  <header>
-    <strong>Portal de asegurados</strong>
-    <span>Póliza activa: {{ contexto.polizaActiva()?.numero ?? 'ninguna' }}</span>
-    @if (sesion.usuario(); as usuario) {
-      <span>{{ usuario.nombre }}</span>
-      <button (click)="sesion.cerrarSesion()">Cerrar sesión</button>
-    } @else {
-      <button (click)="sesion.iniciarSesion()">Iniciar sesión</button>
-    }
-    <button (click)="contexto.alternarRayosX()">
-      Rayos X: {{ contexto.rayosX() ? 'encendido' : 'apagado' }}
-    </button>
-    <nav>
-      <a routerLink="/">Inicio</a> |
-      <a routerLink="/polizas">Pólizas</a> |
-      <a routerLink="/siniestros">Siniestros</a>
-    </nav>
+  <header class="encabezado">
+    <div class="barra">
+      <strong class="marca">Portal de asegurados</strong>
+      <button
+        type="button"
+        class="boton-menu"
+        (click)="alternarMenu()"
+        [attr.aria-expanded]="menuAbierto()"
+        aria-controls="menu-principal"
+      >
+        ☰ Menú
+      </button>
+    </div>
+
+    <span class="poliza-activa">
+      Póliza activa: {{ contexto.polizaActiva()?.numero ?? 'ninguna' }}
+    </span>
+
+    <div id="menu-principal" class="menu" [class.abierto]="menuAbierto()">
+      <nav aria-label="Principal" (click)="cerrarMenu()">
+        <a routerLink="/" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+        @for (dominio of menu(); track dominio.clave) {
+          <a [routerLink]="dominio.ruta" routerLinkActive="activo">{{ dominio.etiqueta }}</a>
+        }
+      </nav>
+
+      <div class="acciones">
+        <label class="selector-mercado">
+          País
+          <select (change)="cambiarMercado($any($event.target).value)">
+            @for (mercado of mercados; track mercado.codigo) {
+              <option [value]="mercado.codigo" [selected]="mercado.codigo === contexto.mercado().codigo">
+                {{ mercado.nombre }}
+              </option>
+            }
+          </select>
+        </label>
+
+        @if (sesion.usuario(); as usuario) {
+          <span>{{ usuario.nombre }}</span>
+          <button type="button" (click)="sesion.cerrarSesion()">Cerrar sesión</button>
+        } @else {
+          <button type="button" (click)="sesion.iniciarSesion()">Iniciar sesión</button>
+        }
+        <button type="button" (click)="contexto.alternarRayosX()">
+          Rayos X: {{ contexto.rayosX() ? 'encendido' : 'apagado' }}
+        </button>
+      </div>
+    </div>
   </header>
+
   <main>
     <router-outlet />
   </main>

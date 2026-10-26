@@ -1,4 +1,4 @@
-import { defineConfig } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './e2e',
@@ -6,9 +6,18 @@ export default defineConfig({
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
     baseURL: 'http://localhost:4200',
-    channel: 'msedge',
     trace: 'retain-on-failure',
   },
+  projects: [
+    {
+      name: 'escritorio',
+      use: { ...devices['Desktop Edge'], channel: 'msedge' },
+    },
+    {
+      name: 'celular',
+      use: { ...devices['Pixel 7'], channel: 'msedge' },
+    },
+  ],
   webServer: [
     {
       command: 'npx ng serve mfe-polizas',

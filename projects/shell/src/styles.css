@@ -1,10 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+/* =========================================================
+   Sistema visual del portal (compartido por todos los dominios)
+
+   Punto de quiebre oficial: 40rem (640 px).
+   - Menos de 40rem: diseño de celular.
+   - 40rem o más: diseño de escritorio.
+   Las variables CSS no funcionan dentro de @media, por eso el
+   valor se documenta aquí y todos los equipos usan el mismo.
+   ========================================================= */
+
 :root {
   --color-primario: #1a4f8b;
   --color-resaltado: #e8f0fe;
   --color-borde: #d0d7de;
   --color-texto: #1f2328;
+  --espacio: 1rem;
+  --radio: 0.5rem;
+  --alto-tactil: 2.75rem; /* 44 px: mínimo recomendado para tocar con el dedo */
   font-family: system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
@@ -12,23 +30,61 @@ body {
   color: var(--color-texto);
 }
 
-header {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  align-items: center;
-  padding: 0.75rem 1.5rem;
-  background: var(--color-primario);
-  color: white;
-}
-
-header a {
-  color: white;
-}
-
 main {
-  padding: 1.5rem;
+  padding: var(--espacio);
 }
+
+@media (min-width: 40rem) {
+  main {
+    padding: 1.5rem;
+  }
+}
+
+/* ---------- Controles táctiles ---------- */
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  min-height: var(--alto-tactil);
+  padding: 0 1rem;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  background: white;
+  color: var(--color-texto);
+  cursor: pointer;
+}
+
+input,
+textarea,
+select {
+  min-height: var(--alto-tactil);
+  padding: 0.5rem;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+}
+
+img {
+  max-width: 100%;
+}
+
+/* Texto que solo leen los lectores de pantalla */
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Tabla responsiva ----------
+   Uso: <table class="responsiva"> y en cada celda data-etiqueta="Nombre".
+   En celular, cada fila se convierte en una tarjeta. */
 
 table {
   width: 100%;
@@ -42,6 +98,32 @@ td {
   text-align: left;
 }
 
-button {
-  cursor: pointer;
+@media (max-width: 39.99rem) {
+  table.responsiva thead {
+    display: none;
+  }
+
+  table.responsiva tr {
+    display: block;
+    margin-bottom: var(--espacio);
+    padding: 0.5rem;
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+  }
+
+  table.responsiva td {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    border: 0;
+  }
+
+  table.responsiva td::before {
+    content: attr(data-etiqueta);
+    font-weight: 600;
+  }
+
+  table.responsiva td.acciones button {
+    width: 100%;
+  }
 }

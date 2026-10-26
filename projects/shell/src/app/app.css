@@ -1,0 +1,103 @@
+.encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.5rem;
+  padding: 0.5rem var(--espacio);
+  background: var(--color-primario);
+  color: white;
+}
+
+.barra {
+  display: flex;
+  flex: 1 1 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.marca {
+  font-size: 1.1rem;
+}
+
+.boton-menu {
+  border-color: rgb(255 255 255 / 0.6);
+  background: transparent;
+  color: white;
+}
+
+.poliza-activa {
+  flex: 1 1 100%;
+  font-size: 0.9rem;
+}
+
+.menu {
+  display: none;
+  flex: 1 1 100%;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-bottom: 0.5rem;
+}
+
+.menu.abierto {
+  display: flex;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+}
+
+nav a {
+  padding: 0.75rem 0;
+  color: white;
+  text-decoration: none;
+}
+
+nav a.activo {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ---------- Escritorio ---------- */
+@media (min-width: 40rem) {
+  .barra,
+  .poliza-activa {
+    flex: 0 0 auto;
+  }
+
+  .boton-menu {
+    display: none;
+  }
+
+  .menu,
+  .menu.abierto {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+  }
+
+  nav {
+    flex-direction: row;
+    gap: 1.25rem;
+  }
+
+  nav a {
+    padding: 0.25rem 0;
+  }
+
+  .selector-mercado {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}

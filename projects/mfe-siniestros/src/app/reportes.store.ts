@@ -3,6 +3,7 @@ import { Injectable, signal } from '@angular/core';
 export interface ReporteSiniestro {
   folio: string;
   poliza: string;
+  documento: string;
   fecha: string;
   descripcion: string;
 }
