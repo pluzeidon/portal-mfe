@@ -4,7 +4,7 @@ type Seccion = 'Inicio' | 'Pólizas' | 'Siniestros';
 
 /** Navega con el menú del shell. En celular, abre el menú ☰ si hace falta. */
 async function irA(page: Page, seccion: Seccion) {
-  await expect(page.getByText('Portal de asegurados')).toBeVisible();
+  await expect(page.getByText('Portal de asegurados', { exact: true })).toBeVisible();
 
   const enlace = page.getByRole('link', { name: seccion, exact: true });
   if (!(await enlace.isVisible())) {
